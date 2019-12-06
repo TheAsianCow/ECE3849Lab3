@@ -29,6 +29,7 @@ sampling.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/_de
 sampling.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/machine/_limits.h
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/comp.h
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/pin_map.h
+sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/pwm.h
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/BIOS.h
 sampling.obj: C:/ti/xdctools_3_32_00_06_core/packages/xdc/std.h
 sampling.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stdarg.h
@@ -250,6 +251,7 @@ sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/knl/Task.h
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/knl/Semaphore.h
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/knl/Clock.h
+sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/family/arm/m3/Hwi.h
 sampling.obj: C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/udma.h
 
 ../sampling.c: 
@@ -281,6 +283,7 @@ C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/_defs.h:
 C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/machine/_limits.h: 
 C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/comp.h: 
 C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/pin_map.h: 
+C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/pwm.h: 
 C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/BIOS.h: 
 C:/ti/xdctools_3_32_00_06_core/packages/xdc/std.h: 
 C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stdarg.h: 
@@ -502,4 +505,5 @@ C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/famil
 C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/knl/Task.h: 
 C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/knl/Semaphore.h: 
 C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/knl/Clock.h: 
+C:/ti/tirtos_tivac_2_16_00_08/products/bios_6_45_01_29/packages/ti/sysbios/family/arm/m3/Hwi.h: 
 C:/ti/tirtos_tivac_2_16_00_08/products/TivaWare_C_Series-2.1.1.71b/driverlib/udma.h: 

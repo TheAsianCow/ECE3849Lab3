@@ -24,6 +24,7 @@
 
 void ADC1_Init(void);
 void COMP0_Init(void);
+void PWM0_Init(void);
 int32_t getADCBufferIndex(void);
 int getTriggerIndex(int triggerDirection);
 int voltageScale(uint16_t voltage, float div);

@@ -70,6 +70,7 @@ int main(void)
 
     ADC1_Init();
     COMP0_Init();
+    PWM0_Init();
     ButtonInit();
 
     // initialize timer 3 in one-shot mode for polled timing

@@ -1120,8 +1120,11 @@ extern xdc_Void ADC_ISR(xdc_UArg);
 /* --> Freq_ISR */
 extern xdc_Void Freq_ISR(xdc_UArg);
 
+/* --> PWM_ISR */
+extern xdc_Void PWM_ISR(xdc_UArg);
+
 /* Object__table__V */
-ti_sysbios_family_arm_m3_Hwi_Object__ ti_sysbios_family_arm_m3_Hwi_Object__table__V[3];
+ti_sysbios_family_arm_m3_Hwi_Object__ ti_sysbios_family_arm_m3_Hwi_Object__table__V[4];
 
 /* Module_State__ */
 typedef struct ti_sysbios_family_arm_m3_Hwi_Module_State__ {
@@ -1789,7 +1792,7 @@ typedef struct xdc_runtime_Text_Module_State__ {
 xdc_runtime_Text_Module_State__ xdc_runtime_Text_Module__state__V;
 
 /* --> xdc_runtime_Text_charTab__A */
-const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[6565];
+const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[6569];
 
 /* --> xdc_runtime_Text_nodeTab__A */
 const __T1_xdc_runtime_Text_nodeTab xdc_runtime_Text_nodeTab__A[50];
@@ -2986,7 +2989,7 @@ ti_sysbios_family_arm_lm4_Timer_Object__ ti_sysbios_family_arm_lm4_Timer_Object_
             (xdc_Bits32)0x0,  /* hi */
             (xdc_Bits32)0x0,  /* lo */
         },  /* extFreq */
-        (ti_sysbios_family_arm_m3_Hwi_Handle)&ti_sysbios_family_arm_m3_Hwi_Object__table__V[2],  /* hwi */
+        (ti_sysbios_family_arm_m3_Hwi_Handle)&ti_sysbios_family_arm_m3_Hwi_Object__table__V[3],  /* hwi */
         (xdc_UInt)0xffffffff,  /* prevThreshold */
         (xdc_UInt)0x0,  /* rollovers */
         (xdc_UInt)0x0,  /* savedCurrCount */
@@ -3302,7 +3305,7 @@ ti_sysbios_family_arm_m3_Hwi_Module__ ti_sysbios_family_arm_m3_Hwi_Module__root_
 };
 
 /* Object__table__V */
-ti_sysbios_family_arm_m3_Hwi_Object__ ti_sysbios_family_arm_m3_Hwi_Object__table__V[3] = {
+ti_sysbios_family_arm_m3_Hwi_Object__ ti_sysbios_family_arm_m3_Hwi_Object__table__V[4] = {
     {/* instance#0 */
         0,
         ((xdc_UArg)(0x0)),  /* arg */
@@ -3322,6 +3325,15 @@ ti_sysbios_family_arm_m3_Hwi_Object__ ti_sysbios_family_arm_m3_Hwi_Object__table
         ((void*)0),  /* hookEnv */
     },
     {/* instance#2 */
+        0,
+        ((xdc_UArg)(0x0)),  /* arg */
+        ((xdc_Void(*)(xdc_UArg))((xdc_Fxn)PWM_ISR)),  /* fxn */
+        ((xdc_UArg)(0x3)),  /* irp */
+        (xdc_UInt8)0x0,  /* priority */
+        (xdc_Int16)0x1a,  /* intNum */
+        ((void*)0),  /* hookEnv */
+    },
+    {/* instance#3 */
         0,
         ((xdc_UArg)((void*)(ti_sysbios_family_arm_lm4_Timer_Handle)&ti_sysbios_family_arm_lm4_Timer_Object__table__V[0])),  /* arg */
         ((xdc_Void(*)(xdc_UArg))((xdc_Fxn)ti_sysbios_family_arm_lm4_Timer_isrStub__E)),  /* fxn */
@@ -3437,7 +3449,7 @@ __FAR__ const CT__ti_sysbios_family_arm_m3_Hwi_Module__startupDoneFxn ti_sysbios
 
 /* Object__count__C */
 #pragma DATA_SECTION(ti_sysbios_family_arm_m3_Hwi_Object__count__C, ".const:ti_sysbios_family_arm_m3_Hwi_Object__count__C");
-__FAR__ const CT__ti_sysbios_family_arm_m3_Hwi_Object__count ti_sysbios_family_arm_m3_Hwi_Object__count__C = 3;
+__FAR__ const CT__ti_sysbios_family_arm_m3_Hwi_Object__count ti_sysbios_family_arm_m3_Hwi_Object__count__C = 4;
 
 /* Object__heap__C */
 #pragma DATA_SECTION(ti_sysbios_family_arm_m3_Hwi_Object__heap__C, ".const:ti_sysbios_family_arm_m3_Hwi_Object__heap__C");
@@ -7456,7 +7468,7 @@ xdc_runtime_Text_Module_State__ xdc_runtime_Text_Module__state__V = {
 
 /* --> xdc_runtime_Text_charTab__A */
 #pragma DATA_SECTION(xdc_runtime_Text_charTab__A, ".const:xdc_runtime_Text_charTab__A");
-const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[6565] = {
+const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[6569] = {
     (xdc_Char)0x0,  /* [0] */
     (xdc_Char)0x41,  /* [1] */
     (xdc_Char)0x5f,  /* [2] */
@@ -14013,15 +14025,19 @@ const __T1_xdc_runtime_Text_charTab xdc_runtime_Text_charTab__A[6565] = {
     (xdc_Char)0x65,  /* [6553] */
     (xdc_Char)0x71,  /* [6554] */
     (xdc_Char)0x0,  /* [6555] */
-    (xdc_Char)0x67,  /* [6556] */
-    (xdc_Char)0x61,  /* [6557] */
-    (xdc_Char)0x74,  /* [6558] */
-    (xdc_Char)0x65,  /* [6559] */
-    (xdc_Char)0x48,  /* [6560] */
-    (xdc_Char)0x77,  /* [6561] */
-    (xdc_Char)0x69,  /* [6562] */
-    (xdc_Char)0x30,  /* [6563] */
-    (xdc_Char)0x0,  /* [6564] */
+    (xdc_Char)0x50,  /* [6556] */
+    (xdc_Char)0x57,  /* [6557] */
+    (xdc_Char)0x4d,  /* [6558] */
+    (xdc_Char)0x0,  /* [6559] */
+    (xdc_Char)0x67,  /* [6560] */
+    (xdc_Char)0x61,  /* [6561] */
+    (xdc_Char)0x74,  /* [6562] */
+    (xdc_Char)0x65,  /* [6563] */
+    (xdc_Char)0x48,  /* [6564] */
+    (xdc_Char)0x77,  /* [6565] */
+    (xdc_Char)0x69,  /* [6566] */
+    (xdc_Char)0x30,  /* [6567] */
+    (xdc_Char)0x0,  /* [6568] */
 };
 
 /* --> xdc_runtime_Text_nodeTab__A */
@@ -14327,7 +14343,7 @@ __FAR__ const CT__xdc_runtime_Text_nodeTab xdc_runtime_Text_nodeTab__C = ((CT__x
 
 /* charCnt__C */
 #pragma DATA_SECTION(xdc_runtime_Text_charCnt__C, ".const:xdc_runtime_Text_charCnt__C");
-__FAR__ const CT__xdc_runtime_Text_charCnt xdc_runtime_Text_charCnt__C = (xdc_Int16)0x19a5;
+__FAR__ const CT__xdc_runtime_Text_charCnt xdc_runtime_Text_charCnt__C = (xdc_Int16)0x19a9;
 
 /* nodeCnt__C */
 #pragma DATA_SECTION(xdc_runtime_Text_nodeCnt__C, ".const:xdc_runtime_Text_nodeCnt__C");
@@ -18806,4 +18822,11 @@ const ti_sysbios_knl_Semaphore_Handle FrequencySem = (ti_sysbios_knl_Semaphore_H
 #endif
 #endif
 const ti_sysbios_knl_Clock_Handle clock1 = (ti_sysbios_knl_Clock_Handle)((ti_sysbios_knl_Clock_Handle)&ti_sysbios_knl_Clock_Object__table__V[1]);
+
+#ifdef __GNUC__
+#ifndef __TI_COMPILER_VERSION__
+    __attribute__ ((externally_visible))
+#endif
+#endif
+const ti_sysbios_family_arm_m3_Hwi_Handle PWM = (ti_sysbios_family_arm_m3_Hwi_Handle)((ti_sysbios_family_arm_m3_Hwi_Handle)&ti_sysbios_family_arm_m3_Hwi_Object__table__V[2]);
 
