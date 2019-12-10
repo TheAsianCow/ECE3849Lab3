@@ -35,13 +35,13 @@
 uint32_t gSystemClock = 120000000; // [Hz] system clock frequency
 
 uint32_t cpu_load_count(void);
-uint32_t count_unloaded = 0;
-uint32_t count_loaded = 0;
-float cpu_load = 0.0;
+uint32_t count_unloaded = 0; //unloaded cpu hits, before interrupts enabled
+uint32_t count_loaded = 0; //loaded cpu hits, during display task
+float cpu_load = 0.0; //load
 
 int trigger = 0; //Trigger index for Waveform Task
 int divNumber = 1; //current division scale, 0->3 inclusive
-float freq = 0;
+float freq = 0; //frequency in Hz
 uint16_t triggerDir = 1; //direction for trigger, 0 or 1
 uint16_t mode = 0; //Current mode (Oscope or FFT) 0 or 1
 const char* slope[] = {"DOWN","UP"}; //slope strings to draw
@@ -93,6 +93,7 @@ void Clock(UArg arg){
     Semaphore_post(ButtonSem);
 }
 
+//Clock to post to FrequencySem every 100ms
 void FreqClock(UArg arg) {
     Semaphore_post(FrequencySem);
 }
@@ -154,11 +155,11 @@ void Display_Task(UArg arg0, UArg arg1) {
 
             snprintf(freq_str, sizeof(freq_str), "f = %.3f Hz", freq);
             GrContextForegroundSet(&sContext, ClrWhite); // yellow text
-            GrStringDraw(&sContext, freq_str, -1, 0, 110, false);
+            GrStringDraw(&sContext, freq_str, -1, 0, 110, false); //draw frequency, mHz resolution
 
             snprintf(load_str, sizeof(load_str), "CPU load = %.1f%%", cpu_load*100);
             GrContextForegroundSet(&sContext, ClrWhite); // yellow text
-            GrStringDraw(&sContext, load_str, -1, 0, 120, false);
+            GrStringDraw(&sContext, load_str, -1, 0, 120, false); //draw CPU usage
         }
         else { //If Spectrum mode
             GrContextForegroundSet(&sContext, ClrWhite); // white text
@@ -226,18 +227,20 @@ void Processing_Task(UArg arg0, UArg arg1) {
     }
 }
 
+//Frequency task, takes the period and periodcount and turns them into a frequency in Hz.
 void Frequency_Task(UArg arg0, UArg arg1) {
     IArg key;
     while(1) {
         Semaphore_pend(FrequencySem, BIOS_WAIT_FOREVER);
-        key = GateHwi_enter(gateHwi0);
-        freq = gSystemClock/((float)period/periodcount);
-        period = 0;
+        key = GateHwi_enter(gateHwi0); //enter gate such that period and periodcount can not be modified during this call
+        freq = gSystemClock/((float)period/periodcount); //get frequency
+        period = 0; //reset period/periodcount
         periodcount = 0;
-        GateHwi_leave(gateHwi0, key);
+        GateHwi_leave(gateHwi0, key); //leave gate
     }
 }
 
+//Function that finds the CPU load
 uint32_t cpu_load_count(void)
 {
     uint32_t i = 0;

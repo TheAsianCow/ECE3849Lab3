@@ -36,13 +36,13 @@
 #pragma DATA_ALIGN(gDMAControlTable, 1024) // address alignment required
 tDMAControlTable gDMAControlTable[64]; // uDMA control table (global)
 volatile uint16_t gADCBuffer[ADC_BUFFER_SIZE];
-volatile uint32_t period,last_count, periodcount;
+volatile uint32_t period, last_count, periodcount;
 
 volatile bool gDMAPrimary = true; // is DMA occurring in the primary channel?
 
 #define PWM_PERIOD 258 // PWM period = 2^8 + 2 system clock cycles
 uint32_t gPhase = 0; // phase accumulator
-uint32_t gPhaseIncrement = 156981055/2; // phase increment for 17 kHz
+uint32_t gPhaseIncrement = 156981055/2; // phase increment for 17 kHz, divided by 2 to account for 2 waveforms in the LUT.
 #define PWM_WAVEFORM_INDEX_BITS 10
 #define PWM_WAVEFORM_TABLE_SIZE (1 << PWM_WAVEFORM_INDEX_BITS)
 uint8_t gPWMWaveformTable[PWM_WAVEFORM_TABLE_SIZE] = {0};
@@ -89,6 +89,7 @@ void ADC1_Init(void){
     ADCIntEnableEx(ADC1_BASE,ADC_INT_DMA_SS0); // enable ADC1 sequence 0 DMA interrupt
 }
 
+//Initializes comparator to exist and have a reference voltage of 1.546875V
 void COMP0_Init(void){
     SysCtlPeripheralEnable(SYSCTL_PERIPH_COMP0);
     ComparatorRefSet(COMP_BASE,COMP_REF_1_546875V);
@@ -105,6 +106,7 @@ void COMP0_Init(void){
     GPIOPinTypeTimer(GPIO_PORTD_BASE, GPIO_PIN_0);
     GPIOPinConfigure(GPIO_PD0_T0CCP0);
 
+    //Prepares edge-capture timer for the frequency reading
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
     TimerDisable(TIMER0_BASE, TIMER_BOTH);
     TimerConfigure(TIMER0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_CAP_TIME_UP);
@@ -115,6 +117,7 @@ void COMP0_Init(void){
     TimerEnable(TIMER0_BASE, TIMER_A);
 }
 
+//Initializes PWM to output a 50% duty cycle wave, and adds two sin waves to the lookup table
 void PWM0_Init(void){
     // use M0PWM1, at GPIO PF1, which is BoosterPack Connector #1 pin 40
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
@@ -135,6 +138,7 @@ void PWM0_Init(void){
     PWMGenIntTrigEnable(PWM0_BASE, PWM_GEN_0, PWM_INT_CNT_ZERO);
     PWMIntEnable(PWM0_BASE, PWM_INT_GEN_0);
 
+    //This was supposed to add one sin wave to the LUT, but it adds two instead.
     int i = 0;
     int pwmval = 127;
     int addToVal = 1;
@@ -172,6 +176,7 @@ void ADC_ISR(void){
     }
 }
 
+//Frequency Hwi that counts the change inbetween this run and the last run
 void Freq_ISR(void) {
     TimerIntClear(TIMER0_BASE, TIMER_CAPA_EVENT);
     uint32_t count = TimerValueGet(TIMER0_BASE, TIMER_A);
@@ -180,6 +185,7 @@ void Freq_ISR(void) {
     last_count = count;
 }
 
+//PWM Hwi that writes the current waveform value to the output pin.
 void PWM_ISR(void){
     PWMGenIntClear(PWM0_BASE,PWM_GEN_0,PWM_INT_GEN_0); // clear PWM interrupt flag
     gPhase += gPhaseIncrement;
@@ -187,10 +193,11 @@ void PWM_ISR(void){
     PWM0_0_CMPB_R = 1 + gPWMWaveformTable[gPhase >> (32 - PWM_WAVEFORM_INDEX_BITS)];
 }
 
+//Gets the current index of the newest value in the ADC buffer
 int32_t getADCBufferIndex(void){
     IArg key;
     int32_t index;
-    key = GateHwi_enter(gateHwi0);
+    key = GateHwi_enter(gateHwi0); //enter gate such that don't need to worry about channel changing in the middle of the run
     if (gDMAPrimary) { // DMA is currently in the primary channel
         index = ADC_BUFFER_SIZE/2 - 1 -
                 uDMAChannelSizeGet(UDMA_SEC_CHANNEL_ADC10 | UDMA_PRI_SELECT);
